@@ -35,7 +35,8 @@ namespace Berkeley1
             }
             finally
             {
-                // put some code here if you need additional loggin.
+                // put some code here if you need additional logging.
+                // You can use this to dispose of an object or sinilar.
                 Console.WriteLine("This is the finally block");
             }
             Console.WriteLine("Press any key to exit");
