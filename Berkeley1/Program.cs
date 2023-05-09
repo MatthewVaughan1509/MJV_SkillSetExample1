@@ -20,9 +20,23 @@ namespace Berkeley1
             IKernel _Kernal = new StandardKernel();
             _Kernal.Load(Assembly.GetExecutingAssembly());
             var stringService = _Kernal.Get<IStringService>();
-            foreach(string s in args)
+            try
             {
-                Console.WriteLine($"{s} reversed is {stringService.ReverseString(s)}");
+                foreach (string s in args)
+                {
+                    Console.WriteLine($"{s} reversed is {stringService.ReverseString(s)}");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Use this block to catch and report errors
+                // Log$Net is useful here
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                // put some code here if you need additional loggin.
+                Console.WriteLine("This is the finally block");
             }
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
