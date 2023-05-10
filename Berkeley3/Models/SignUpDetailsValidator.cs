@@ -1,5 +1,10 @@
-﻿using FluentValidation;
+﻿using Berkeley3.Domain;
+using Berkeley3.Implementations;
+using Berkeley3.Interfaces;
+using FluentValidation;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Berkeley3.Models
 {
@@ -9,22 +14,28 @@ namespace Berkeley3.Models
     /// </summary>
     public class SignUpDetailsValidator : AbstractValidator<SignUpDetails>
     {
+        private IEmailRepository _emailRepository;
+        private List<Email> emails;
+
         public SignUpDetailsValidator()
         {
             RuleFor(x => x.Email).Must(EmailValidate).WithMessage("The email address must be unique");
             RuleFor(x => x.Password).Must(PasswordValidate).WithMessage("Password must have 1 uppercase character and one number");
+            // Create a repository. Typically this would be done with a DI framework. The example in Berkeley1 demonstrates Ninject so here I will
+            // just create an instance of the repository class.
+            _emailRepository = new EmailRepository();
+            emails = _emailRepository.List();
         }
 
         /// <summary>
-        /// I have hard coded a list of email addresses for validation.
-        /// In a 'real world' implementation of this we would inject a service class or even a repository to return the list of email address for validation.
+        /// Validate the emails using the repository which has returned a list of emails.
+        /// If the list of emails was very large then a more complex validation might be needed for performance gain.
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
         public bool EmailValidate(string email)
         {
-            var listOfEmails = new List<string>() { "matthew@claygate.com", "bertie@claygatek9s.com", "ruby@esherk9s.com", "dexter@waltonk9s.com" };
-            return !listOfEmails.Contains(email);
+            return !emails.Any(e => e.Address.Equals(email, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

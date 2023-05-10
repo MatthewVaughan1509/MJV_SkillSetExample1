@@ -129,9 +129,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\SignUpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Domain\Email.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Implementations\EmailRepository.cs" />
+    <Compile Include="Interfaces\IEmailRepository.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Models\SignUpDetails.cs" />
     <Compile Include="Models\SignUpDetailsValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
